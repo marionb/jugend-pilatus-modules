@@ -1,0 +1,270 @@
+<div class="mod_ausschreibunglistfull <?php echo $this->class; ?>"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+   <?php if ($this->headline): ?>
+  <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+  <?php endif; ?>
+  
+  <?php $full_list = $this->full_list; ?>
+
+  <?php if($full_list): ?>
+  <h1 class="ce_headline">Touren 2016</h1>
+  <?php else: ?>
+  <h1 class="ce_headline">N&aumlchste Touren</h1>
+  <?php endif; ?>
+  
+  <?php if($this->Ausschreibung == null): ?>
+  <div>
+    <?php if($full_list): ?>
+    <h3>Es sind noch keine Touren in der n&auml;chsten Zeit geplaant.</h3>
+    <?php else: ?>
+    <h3>Momentan sind keine Touren verf&uuml;gbar</h3>
+    <?php endif; ?>
+  </div>
+  
+  <?php else: ?>
+  
+  <?php foreach ($this->Ausschreibung as $Event): ?>
+  <?php $tn = $Event['teilnehmer']; ?>
+  <?php $tnRows = 12/count($tn) ; ?>
+  <div>
+    <h3><?php echo $Event['titel']; ?> <small><?php echo $Event['start_date']; ?> <?php if($Event['end_date']) : ?> bis <?php echo $Event['end_date']; ?> <?php endif ; ?></small></h3>
+      <div class="Jugend-btn">
+            <div class="row text-center">
+            <?php if(in_array("JO", $tn)): ?>
+              <div class="col-md-2 col-sm-2 col-xs-3">
+	             <a class="disabled btn btn-md btn-success JO-btn" href="javascript:void(0)"> 
+			        JO
+			      </a>
+              </div>
+              <?php endif ; ?>
+              <!-- ------- -->
+              <?php if(in_array("FaBe", $tn)): ?>
+              <div class="col-md-2 col-sm-2 col-xs-3">
+			      <a class="disabled btn btn-md btn-warning FaBe-btn" href="javascript:void(0)"> 
+			        FaBe
+			      </a>
+			   </div>
+			   <?php endif ; ?>
+			  <!-- ------- -->
+			  <?php if(in_array("J+S Kids", $tn)): ?>
+			  <div class="col-md-2 col-sm-2 col-xs-3">
+			      <a class="disabled btn btn-md btn-danger JSKids-btn" href="javascript:void(0)"> 
+			        J+S Kids
+			      </a>
+			   </div>
+			   <?php endif ; ?>
+			   <!-- ------- -->
+			   <?php if(in_array("KiBe", $tn)): ?>
+			   <div class="col-md-2 col-sm-2 col-xs-3">
+			      <a class="disabled btn btn-md btn-primary KiBe-btn" href="javascript:void(0)"> 
+			        KiBe
+			      </a>
+			  </div>
+			  <?php endif ; ?>
+			   <!-- ------- -->
+			</div>
+		</div>
+    <br/>
+    <p><?php echo $Event['teaser']; ?></p>
+    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-<?php echo $Event[id];?>">Detailierte Ausschreibung</button>
+    <hr>
+    
+    <div class="modal fade" id="modal-<?php echo $Event[id];?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <br/>
+            <h3 class="text-center" id="myLargeModalLabel">
+                <?php echo $Event['titel']; ?>
+		        <small>
+			    <?php echo $Event['start_date']; ?> <?php if($Event['end_date']) : ?> bis <?php echo $Event['end_date']; ?> <?php endif ; ?>
+			    </small>
+			</h3>
+			<div class="Jugend-btn">
+            <div class="text-center row">
+              <div class="col-md-<?php echo $tnRows; ?>">
+                <?php if(in_array("JO", $tn)): ?>
+	              <span style="font-size: 90px;" class="icon-JO-Alter">
+		             <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span><span class="path16"></span><span class="path17"></span><span class="path18"></span><span class="path19"></span><span class="path20"></span><span class="path21"></span><span class="path22"></span><span class="path23"></span><span class="path24"></span><span class="path25"></span><span class="path26"></span><span class="path27"></span><span class="path28"></span><span class="path29"></span><span class="path30"></span><span class="path31"></span><span class="path32"></span><span class="path33"></span><span class="path34"></span><span class="path35"></span><span class="path36"></span><span class="path37"></span><span class="path38"></span><span class="path39"></span><span class="path40"></span><span class="path41"></span><span class="path42"></span><span class="path43"></span><span class="path44"></span><span class="path45"></span><span class="path46"></span><span class="path47"></span><span class="path48"></span><span class="path49"></span><span class="path50"></span><span class="path51"></span><span class="path52"></span><span class="path53"></span><span class="path54"></span><span class="path55"></span><span class="path56"></span><span class="path57"></span><span class="path58"></span><span class="path59"></span><span class="path60"></span><span class="path61"></span><span class="path62"></span><span class="path63"></span>
+	               </span>
+	            <?php endif ; ?>
+              </div>
+              <div class="col-md-<?php echo $tnRows; ?>">
+			    <?php if(in_array("FaBe", $tn)): ?>
+			      <a class="btn btn-lg btn-warning FaBe-btn" href="javascript:void(0)"> 
+			        FaBe
+			      </a>
+			     <?php endif ; ?>
+			   </div>
+			   <div class="col-md-<?php echo $tnRows; ?>">
+			     <?php if(in_array("J+S Kids", $tn)): ?> 
+			      <a class="btn btn-lg btn-success JSKids-btn" href="javascript:void(0)"> 
+			        J+S Kids
+			      </a>
+			     <?php endif ; ?>
+			   </div>
+			   <div class="col-md-<?php echo $tnRows; ?>">
+			    <?php if(in_array("KiBe", $tn)): ?>
+			    <span style="font-size: 90px;" class="icon-KiBe-Alter">
+		          <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span><span class="path16"></span><span class="path17"></span><span class="path18"></span><span class="path19"></span><span class="path20"></span><span class="path21"></span><span class="path22"></span><span class="path23"></span><span class="path24"></span><span class="path25"></span><span class="path26"></span><span class="path27"></span><span class="path28"></span><span class="path29"></span><span class="path30"></span><span class="path31"></span><span class="path32"></span><span class="path33"></span><span class="path34"></span><span class="path35"></span><span class="path36"></span><span class="path37"></span><span class="path38"></span><span class="path39"></span><span class="path40"></span><span class="path41"></span><span class="path42"></span><span class="path43"></span><span class="path44"></span><span class="path45"></span><span class="path46"></span><span class="path47"></span><span class="path48"></span><span class="path49"></span><span class="path50"></span><span class="path51"></span><span class="path52"></span><span class="path53"></span><span class="path54"></span><span class="path55"></span><span class="path56"></span><span class="path57"></span><span class="path58"></span><span class="path59"></span><span class="path60"></span><span class="path61"></span><span class="path62"></span><span class="path63"></span>
+	            </span>
+			    <?php endif ; ?>
+			  </div>
+			</div>
+			</div>
+          </div>
+          <div class="modal-body">
+          	<!--<div class="container">-->
+          	  <div class="row">
+          	    <?php if($Event['bilder']) : ?>
+          	      <div class="col-md-7">
+          	        <?php echo $Event['teaser']; ?>
+          	        <br/>
+          	        <?php echo $Event['text']; ?>
+          	        <br/>
+          	      </div>
+          	      <!------------------------------------------------------------>
+ 				  <div class="col-md-5">
+          	        <img src="<?php echo $Event['bilder']; ?>" alt="<?php echo $Event['imgText']; ?>" class="img-rounded img-responsive"/>
+     	          </div>
+          	    <?php else : ?>
+          	      <div class="col-md-12">
+          	        <?php echo $Event['teaser']; ?>
+          	        <br/>
+          	        <?php echo $Event['text']; ?>
+          	        <br/>
+          	      </div>
+          	    <?php endif; ?>
+          	  </div> <!-- row -->
+          	    
+          	  <br/>
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <div class="col-md-2">
+          	      <strong>Wohin</strong>
+          	    </div>
+          	    <div class="col-md-10">
+          	      <?php echo $Event['ziel']; ?>
+          	    </div>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <div class="col-md-2">
+          	      <strong>Organisator</strong>
+          	    </div>
+          	    <div class="col-md-10">
+          	      <?php echo $Event['vorname_org']; ?> <?php echo $Event['name_org']; ?>
+          	    </div>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <div class="col-md-2">
+          	      <strong>Leitung</strong>
+          	    </div>
+          	    <div class="col-md-10">
+          	      <?php echo $Event['leiter_verantwortlich']; ?>
+          	      <br/>
+          	      <?php if($Event['leiter']) : ?>
+          	        <?php echo $Event['leiter']; ?>
+          	      <?php endif; ?>
+          	    </div>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <?php if($Event['treffpkt']) : ?>
+          	      <div class="col-md-2">
+          	        <strong>Treffpunkt</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	        <?php echo $Event['treffpkt']; ?>
+          	      </div>
+          	    <?php endif; ?>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <?php if($Event['rueckkehr']) : ?>
+          	      <div class="col-md-2">
+          	        <strong>R&uuml;kkehr</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	        <?php echo $Event['rueckkehr']; ?>
+          	      </div>
+          	    <?php endif; ?>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <?php if($Event['material']) : ?>
+          	      <div class="col-md-2">
+          	        <strong>Ausr&uuml;stung</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	        <?php echo $Event['material']; ?>
+          	      </div>
+          	    <?php endif; ?>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <?php if($Event['verpflegung']) : ?>
+          	      <div class="col-md-2">
+          	        <strong>Verpflegung</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	        <?php echo $Event['verpflegung']; ?>
+          	      </div>
+          	    <?php endif; ?>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	      <div class="col-md-2">
+          	        <strong>Kosten</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	          <?php echo $Event['kosten']; ?> 
+          	      </div>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <?php if($Event['anforderung']) : ?>
+          	      <div class="col-md-2">
+          	        <strong>Anforderung</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	        <?php echo $Event['anforderung']; ?>
+          	      </div>
+          	    <?php endif; ?>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <?php if($Event['anmeldung']) : ?>
+          	      <div class="col-md-2">
+          	        <strong>Anmeldung</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	        <?php echo $Event['anmeldung']; ?>
+          	      </div>
+          	    <?php endif; ?>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	<!--</div>  container -->
+          	<br/>
+          	<div class="alert alert-warning text-center">
+			  Versicherung ist Sache der Teilnehmenden!
+          	 </div>
+          	 <!------------------------------------------------------------>
+          </div> <!-- modal-body -->
+          <div class="modal-footer">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div> <!-- modal-footer -->
+        </div>
+      </div>
+    </div>      
+  </div>
+  
+  <?php endforeach; ?>
+  <?php endif; ?>
+  
+  <?php if(!$full_list): ?>
+    <a role="button" class="btn btn-primary" href="index.php/ausschreibungen.html">Weitere Ausschreibungen</a>
+  <?php endif; ?>
+  
+</div>

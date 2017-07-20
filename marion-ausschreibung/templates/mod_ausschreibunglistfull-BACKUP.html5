@@ -1,0 +1,344 @@
+<div class="mod_ausschreibunglistfull <?php echo $this->class; ?>"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+   <?php if ($this->headline): ?>
+  <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+  <?php endif; ?>
+
+<!-- Forms to fill in. They will alwas stay the same. No change on after GET/POST -->
+<div id="Forms">
+  <div class="row">
+  	<div class="col-md-2 col-sm-2 col-xs-3">
+  	  <h4>Art der Tour</h4>
+  	  <form id="event_type_form">
+  	      <?php foreach ($this->EventTypes as $EventTypes): ?>
+  	      <input type="checkbox" name="typ" value="<?php echo $EventTypes; ?>"><?php echo $EventTypes; ?><br>
+  	      <?php endforeach;?>
+  	  </form>
+  	</div> <!-- End COL -->
+   
+  	<div class="col-md-2 col-sm-2 col-xs-3">
+  	  <h4>Teinehmer</h4>
+  	  <form method="post" id="teilnehmer_form">
+  	    <p>
+  	    <input class="teilnehmerCheckBox" type="checkbox" name="teilnehmer" value="JO">JO<br>
+  	    <input class="teilnehmerCheckBox" type="checkbox" name="teilnehmer" value="KiBe">KiBe<br>
+  	    <input class="teilnehmerCheckBox" type="checkbox" name="teilnehmer" value="FaBe">FaBe<br>
+  	    <input class="teilnehmerCheckBox" type="checkbox" name="teilnehmer" value="J&SKids">JSKids<br>
+  	    </p>
+  	  </form>
+  	</div> <!-- End COL -->
+   
+    <!--<div class="col-md-2 col-sm-2 col-xs-3">
+      <div class="form-group">
+          <label>Von</label>
+          <div class="col-xs-5 date">
+              <div class="input-group input-append date" id="datePicker">
+                  <input type="text" class="form-control" name="date" />
+                  <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+              </div>
+          </div>
+      </div>
+  	</div> --><!-- End COL -->
+  
+  </div> <!-- End ROW -->
+  <div>
+    <button class="btn btn-primary" id="trigger">Suchen</button>
+  </div>
+</div>
+<!--------------------------------END FORM-------------------------------------------------->
+
+<!-- Hear comes the HTML layout for the Ausschreibungen, which contents is filled by the POST/GET request result -->
+
+<!--
+TODO:
+1. Is there a posibility for default values
+		-> if yes us the answer from the GET reques to fill the default values 
+ -->
+<!-- TEST -->
+
+
+    <script type="text/javascript" src="http://underscorejs.org/underscore-min.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+    </script>
+
+<script type="text/javascript">
+
+/*$(document).ready(function() {
+    $('#datePicker')
+        .datepicker({
+            format: 'mm/dd/yyyy'
+        })
+        .on('changeDate', function(e) {
+            // Revalidate the date field
+            $('#eventForm').formValidation('revalidateField', 'date');
+        });
+    
+    $('#eventForm').formValidation({
+        framework: 'bootstrap',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        date: {
+            validators: {
+                notEmpty: {
+                    message: 'The date is required'
+                },
+                date: {
+                    format: 'MM/DD/YYYY',
+                    message: 'The date is not a valid'
+                }
+            }
+        }
+    });
+    
+});*/
+
+
+
+var createCheckString_ = function(checked){
+	var checkString = "";
+	var checkArray = [];
+	if(!checked)
+		return 0;
+	
+	for(i = 0; i < checked.length; i++){
+		checkArray.push(checked[i].value);
+		console.log(checked[i].value);
+	}
+	
+	return checkArray.join(',');
+};
+
+var teilnehmer = function() {
+	var checked = $("input[name=teilnehmer]:checked");
+	return createCheckString_(checked);
+};
+
+var type = function() {
+	var checked = $("input[name=typ]:checked");
+	return createCheckString_(checked)
+};
+
+$("input[type=checkbox]").on("click", teilnehmer);
+
+//var teilnehmer;
+var data = {};
+var events;
+data["REQUEST_TOKEN"] = "<?php echo REQUEST_TOKEN ?>";
+
+$(document).ready(function(){
+    $("#trigger").click(function(event){
+      data["teilnehmer"] = teilnehmer();
+      data["type"] = type();
+      
+      $.get( "http://localhost:90/JOSeite/", function( responseText, status) {
+    	  events = responseText;
+      	  var tableTemplate = $("#ausschreibung-template").html();
+      	 
+      	  $("#ausschreibung").html(_.template(tableTemplate,{events:events}));
+    	}, "json");
+      /*$.post(
+            '<?php echo \Contao\Environment::get('requestUri')?>',
+            data,
+            function(responseText) {
+            	events = responseText;
+            	var tableTemplate = $("#ausschreibung-template").html();
+            	 
+            	$("#ausschreibung").html(_.template(tableTemplate,{events:events}));
+            }
+        ).fail(function( jqXhr, textStatus, errorThrown ){ console.log( errorThrown )});
+        event.preventDefault();*/
+    });
+});
+</script>
+
+<!-- TEST -->
+ 
+ <!-- THE NEW CODE -->
+ <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+  
+ <!-- THE NEW CODE -->
+
+  <h1 class="ce_headline">Touren 2016</h1>
+  <!-- Placement of the Events template once generated -->
+  <div id=ausschreibung></div>
+  
+  <!-- Tempalte for an event -->
+  <script id="ausschreibung-template" type="text/html">
+  <% _.each(events[0],function(event,key,list){ %>
+  <% key =0%>
+  <div>
+    <h3><%= event.titel %> <small><%= event.date %></small></h3>
+    <!-- Add icons for concering participants -->
+    <div class="Jugend-btn">
+    <br/>
+    <p><%= event.teaser %></p>
+    <div>Link zu dieser Ausschreibung: <a href="<%= event.URL %>"><%= event.URL %></a></div> <!-- TODO: show proper URL -->
+    <br/>
+    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-<%= key %>">Detailierte Ausschreibung</button>
+    <hr>
+    
+    <div class="modal fade" id="modal-<%= key %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <br/>
+            <h3 class="text-center" id="myLargeModalLabel">
+                <%= event.titel %>
+		        <small>
+			    <%= event.date %> <!-- TODO end Date -->
+			    </small>
+			</h3>
+
+          </div>
+          <div class="modal-body">
+          	<!--<div class="container">-->
+          	  <div class="row">
+                <% if (event.bilder) { %>
+          	      <div class="col-md-7">
+          	        <%= event.teaser %>
+          	        <br/>
+          	        <%= event.text %>
+          	        <br/>
+          	      </div>
+ 				  <div class="col-md-5">
+          	        <img src="<%=event.bilder%>" alt="<%= event.imgText %>" class="img-rounded img-responsive"/>
+     	          </div>
+              <!---------------------ELSE--------------------------------------->
+          	    <% } else { %>
+          	      <div class="col-md-12">
+          	        <%= event.teaser %>
+          	        <br/>
+          	        <%= event.text %>
+          	        <br/>
+          	      </div>
+          	    <% } %>
+          	  </div> <!-- row -->
+          	  <br/>
+              <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <div class="col-md-2">
+          	      <strong>Wohin</strong>
+          	    </div>
+          	    <div class="col-md-10">
+          	      <%= event.ziel %>
+          	    </div>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <div class="col-md-2">
+          	      <strong>Organisator</strong>
+          	    </div>
+          	    <div class="col-md-10">
+          	      <%= event.vorname_org %> <%= event.name_org %>
+          	    </div>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <div class="col-md-2">
+          	      <strong>Leitung</strong>
+          	    </div>
+          	    <div class="col-md-10">
+          	      <%= event.leiter_verantwortlich %>
+          	      <br/>
+          	      <%= event.leiter %>
+          	    </div>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <% if (event.treffpkt) {%>
+          	      <div class="col-md-2">
+          	        <strong>Treffpunkt</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	        <%= event.treffpkt %>
+          	      </div>
+          	    <% } %>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <% if(event.rueckkehr) {%>
+          	      <div class="col-md-2">
+          	        <strong>R&uuml;kkehr</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	        <%= event.rueckkehr %>
+          	      </div>
+          	    <% } %>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <% if (event.material) { %>
+          	      <div class="col-md-2">
+          	        <strong>Ausr&uuml;stung</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	        <%= event.material %>
+          	      </div>
+          	    <% } %>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <% if(event.verpflegung) { %>
+          	      <div class="col-md-2">
+          	        <strong>Verpflegung</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	        <%= event.verpflegung %>
+          	      </div>
+          	    <% } %>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	      <div class="col-md-2">
+          	        <strong>Kosten</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	          <%= event.kosten %> 
+          	      </div>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <% if(event.anforderung) { %>
+          	      <div class="col-md-2">
+          	        <strong>Anforderung</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	        <%= event.anforderung %>
+          	      </div>
+          	    <% } %>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	  <div class="row">
+          	    <% if(event.anmeldung) { %>
+          	      <div class="col-md-2">
+          	        <strong>Anmeldung</strong>
+          	      </div>
+          	      <div class="col-md-10">
+          	        <%= event.anmeldung %>
+          	      </div>
+          	    <% } %>
+          	  </div> <!-- row -->
+          	  <!------------------------------------------------------------>
+          	<!--</div>  container -->
+          	<br/>
+          	<div class="alert alert-warning text-center">
+			  Versicherung ist Sache der Teilnehmenden!
+          	 </div>
+<!------------------------------------------------------------>
+          </div> <!-- modal-body -->
+          <div class="modal-footer">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div> <!-- modal-footer -->
+        </div>
+      </div>
+    </div>      
+  <!-- </div> -->
+  </div>
+ <% }) %>
+</script> <!-- ausschreibung-template -->
+  
+</div>

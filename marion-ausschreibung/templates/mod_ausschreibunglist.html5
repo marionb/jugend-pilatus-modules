@@ -1,0 +1,23 @@
+<div class="mod_ausschreibunglist <?php echo $this->class; ?>"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+  <?php if ($this->headline): ?>
+
+  <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+  <?php endif; ?>
+
+  <h1 class="ce_headline">N&auml;chste Touren</h1>
+  
+  <?php foreach ($this->arrNextEvent as $Anlass): ?>
+        <h3><?php echo $Anlass['titel']; ?></h3>
+        <p> Von <?php echo $Anlass['start_date']; ?> 
+        <?php if($Anlass['end_date']) : ?>
+        bis <?php echo $Anlass['end_date']; ?></p>
+        <?php endif ; ?>
+        <p> <?php echo $Anlass['teaser']; ?></p>
+        <hr>
+        
+    <?php endforeach; ?>
+    <div>
+      <p> <a role="button" class="btn btn-primary" href="index.php/ausschreibungen.html">Weitere Ausschreibungen</a>
+    </div> 
+
+</div>

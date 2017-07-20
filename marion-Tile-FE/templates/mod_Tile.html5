@@ -1,0 +1,32 @@
+<div class="mod_Tiles <?php echo $this->class; ?>"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+  <div class="col-md-6">
+  <!-- this only contains an image in a column and no well -->
+	<div>
+        <a class="fa-links" href="http://100-jahre.jugend-pilatus.ch">
+            <img class="img-rounded img-responsive" alt="100 Jahre Jugend Pilatus" src="http://localhost/JOSeite/system/modules/marion-Tile-FE/html/100-Jahre_Button.png">
+		</a>
+    </div>
+  </div>
+    <div class="col-md-6">
+	<div class="well background-FE-tiles">
+        <a class="fa-links" href="index.php/ausschreibungen.html">
+            <h1>Touren</h1>
+		</a>
+    </div>
+  </div>
+    <div class="col-md-6">
+	<div class="well background-FE-tiles">
+	  <a class="fa-links" href="index.php/berichte.html">
+	    <h1>Berichte</h1>
+      </a>
+    </div>
+  </div>
+    <div class="col-md-6">
+	<div class="well background-FE-tiles">
+	<a class="fa-links" href="index.php/PortraitKontakt.html">
+	  <h1>Portrait</h1>
+	</a>
+    </div>
+  </div>  
+</div>

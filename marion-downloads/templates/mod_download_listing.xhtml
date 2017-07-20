@@ -1,0 +1,82 @@
+
+<link href="system/modules/downloads/assets/css/download.css" rel="stylesheet"> <!-- Own Styles -->
+<script src="system/modules/downloads/assets/javascript/jQjs.js"></script>
+
+<div class="download_container"> <!-- Start Download-Container -->
+    <div class="info_container">
+        <div class="info_row">
+            <div class="info_element" id="element_1">DATEI</div>
+            <div class="line_up"></div>
+            <div class="info_element" id="element_2">BESCHREIBUNG</div>
+            <div class="line_up"></div>
+            <div class="info_element" id="element_3">GRÖSSE IN MB</div>
+            <div class="line_up"></div>
+            <div class="info_element" id="element_4">ANZAHL DOWNLOADS</div>
+        <div style="clear:both;"></div>
+        </div>
+    </div>
+        
+      
+      <?php if ($this->downloads != ''): ?> <!-- Start Download-Listing, falls Content vorhanden ist -->
+      <div class="download_listing">
+          
+              <?php $count = 1; ?> <!-- Zähler wird deklariert, für die Unterscheidung gerade und ungerader Reihen -->
+              
+              <?php foreach ($this->downloads as $download): ?> <!-- Schleife geht alle Inhaltsreihen durch -->
+                        
+                        <a href="<?php echo $download['href']; ?>" title="STEP7 Datei-Download" class="link2download <?php if ($count % 2 == 0) { echo 'other_bg'; } else { echo 'no_other_bg'; } ?>" > <!-- Inhalts-Elemente je Reihe werden ausgegeben -->
+                           <div class="link_row">
+                                <div class="title_in_a"><?php echo $download['title']; ?></div>           
+                                <div class="desc_in_a"><?php echo $download['description']; ?></div>
+                                <div class="size_in_a"><?php echo getSizeInMBof($download['href']); ?></div>
+                                <div class="number_in_a"><?php echo $download['count']; ?></div>
+                                <div style="clear:both;"></div>
+                                <br />
+                                <br />
+                            </div>
+                        </a>
+                   <?php $count++; ?>
+              <?php endforeach; ?>   
+              <?php endif; ?>  <!-- ENDE Überprüfung, ob Content vorhanden ist -->
+      </div>
+      <!-- End Download-Listing -->
+      
+</div> <!-- End Download-Container -->
+
+
+<?php 
+
+function getSizeInMBof($path)
+{
+    $ch = curl_init(); 
+    curl_setopt($ch, CURLOPT_HEADER, true); 
+    curl_setopt($ch, CURLOPT_NOBODY, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); 
+    curl_setopt($ch, CURLOPT_URL, $path); 
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
+    $head = curl_exec($ch);
+
+    $size = curl_getinfo($ch,CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+
+    if(!$size) {
+        return null;
+    }
+    else {
+        $sizeConverted = convertSize($size);
+    }
+    return $sizeConverted;
+}
+function convertSize($size) {
+        
+        if ($size > 0)
+        {
+            $unit = intval(log($size, 1024));
+            $units = array('B', 'KB', 'MB', 'GB');
+
+            if (array_key_exists($unit, $units) === true)
+            {
+                return sprintf('%d %s', $size / pow(1024, $unit), $units[$unit]);
+            }
+        }
+}
+?>

@@ -1,0 +1,37 @@
+<div class="mod_bericht <?php echo $this->class; ?>"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+  <?php if ($this->headline): ?>
+  
+
+
+  <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+  <?php endif; ?>
+
+  <h1 class="ce_headline">Berichte</h1>
+  
+  <?php foreach ($this->Berichte as $Bericht): ?>
+  <div>
+    <p><h3><?php echo $Bericht['title']; ?></h3> </p>
+    <p><?php echo $Bericht['teaser']; ?></p>
+    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-<?php echo $Bericht[id];?>">Bericht im Detail</button>
+    <hr>
+    
+    <div class="modal fade" id="modal-<?php echo $Bericht[id];?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myLargeModalLabel"><?php echo $Bericht['title']; ?></h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div> <!-- modal-footer -->
+        </div> <!-- modal-content -->
+      </div> <!-- modal-dialog -->
+    </div> <!-- modal -->      
+  </div>
+  <?php endforeach; ?>
+  <div>
+    <p> <a role="button" class="btn btn-primary" href="index.php/berichte.html">Weitere Berichte</a>
+  </div> 
+
+</div>

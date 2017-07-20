@@ -1,0 +1,16 @@
+<div class="mod_download_jahresprogram_archiv <?php echo $this->class; ?>"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+  <?php foreach ($this->arrNextDownloads as $Download): ?>
+    <?php if($Download['type'] == 'Jahresprogram') : ?>
+    <hr>
+    <div>
+      <h3><?php echo $Download['titel']; ?></h3>
+    </div>
+    <div>
+      <p><?php echo $Download['description']; ?></p>
+      <p> <a href="<?php echo $Download['href']; ?>">Weiter Lesen</a></p>
+    </div>
+    <?php endif; ?>
+  <?php endforeach; ?>
+  <hr>
+</div>

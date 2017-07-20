@@ -1,0 +1,19 @@
+<div class="mod_download_foehn_alle <?php echo $this->class; ?>"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+  <h1 class="ce_headline"><img class="img-responsive img-foehn" alt="F&ouml;hn" src="http://jugend-pilatus.ch/system/modules/marion-downloads/html/foehn.svg"></h1>
+  <div>
+    Der F&ouml;hn ist die Monatszeitschrift der Jugend Pilatus. Er erscheint all monatlich mit einer Doppelausgabe im Detzember/Januar und Juli/August. Der F&ouml;hn informiert über kommende Touren, Lager so wie alle anderen Neuigkeiten von der Jugend.
+  </div>
+  <?php foreach ($this->arrNextDownloads as $Download): ?>
+    <?php if($Download['type'] == 'Foehn') : ?>
+    <hr>
+    <div>
+      <h3><?php echo $Download['titel']; ?></h3>
+    </div>
+    <div>
+      <p><?php echo $Download['description']; ?></p>
+      <p> <a href="<?php echo $Download['href']; ?>">Weiter Lesen</a></p>
+    </div>
+    <?php endif; ?>
+  <?php endforeach; ?>
+  <hr>
+</div>

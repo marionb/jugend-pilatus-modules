@@ -1,0 +1,56 @@
+<div class="mod_bericht <?php echo $this->class; ?>"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+  <div>
+  <?php $full_list = $this->full_list; ?>
+  <?php if(!$full_list): ?>
+  <div class="thumbnail tile tile-medium tile-orange">
+  <?php endif; ?>
+    <h1 class="ce_headline text-center">Bericht<?php if(!$full_list): ?>e<?php else: ?>-Archive <?php endif; ?></h1>
+    <hr>
+    <?php foreach ($this->Berichte as $Bericht): ?>
+    
+    <div>
+      <h3><?php echo $Bericht['title']; ?></h3>
+      <?php if($Bericht['image']!=null): ?>
+      <div class="row">
+      <div class="col-md-3">
+        <img class="img-rounded img-responsive" alt="" src="<?php echo $Bericht['image']; ?>"/>   
+      </div>
+      <div class="col-md-9">
+         <p><?php echo $Bericht['teaser']; ?></p>
+      </div>
+      </div>
+      <?php else : ?>
+      <p><?php echo $Bericht['teaser']; ?></p>
+      <?php endif; ?>
+    </div>
+    <br/>
+    <a data-toggle="modal" data-target="#modal-<?php echo $Bericht[id];?>">Bericht weiter lesen</a>
+    <hr>
+    <div class="modal fade" id="modal-<?php echo $Bericht[id];?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title <?php if($full_list): ?>text-center<?php endif; ?>" id="myLargeModalLabel"><?php echo $Bericht['title']; ?></h4>
+          </div>
+          <div class="modal-body">
+            <?php echo $Bericht['text']; ?>
+          </div><!-- modal-body -->
+          <div class="modal-footer">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div> <!-- modal-footer -->
+        </div> <!-- modal-content -->
+      </div> <!-- modal-dialog -->
+    </div> <!-- modal -->      
+    
+    <?php endforeach; ?>
+    <?php if(!$full_list): ?>
+    <div class="text-center">
+      <a role="button" class="btn btn-primary" href="index.php/berichte.html">Bericht-Archiv</a>
+    </div> 
+    <?php endif; ?>
+  <?php if(!$full_list): ?>
+  </div>
+  <?php endif; ?>
+</div>
+</div>
