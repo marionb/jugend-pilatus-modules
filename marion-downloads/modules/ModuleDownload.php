@@ -72,7 +72,7 @@ class ModuleDownload_Get
 				'type'			=> $objAus->type,
 				'description'	=> $objAus->description,
 				'href'			=> $objHref,
-				'tstamp'		=> ModuleDownload::datumswandler(date('Y-m-d', (int)$objAus->tstamp)),
+				'tstamp'		=> ModuleDownload_Get::datumswandler(date('Y-m-d', (int)$objAus->tstamp)),
 			);
 		}
 		return $arrNextDownloas;
@@ -106,14 +106,10 @@ class ModuleDownload extends Module
 	protected function compile()
 	{
 		$arrNextDownloas = ModuleDownload_Get::get_downloads($this->Database);
-		
 		if (TL_MODE == 'FE') {
 			$this->Template->fmdId = $this->id;
 			$this->Template->Ausschreibung = $arrNextDownloas;
 		}
 		$this->Template->arrNextDownloads = $arrNextDownloas;
 	}
-	
-	
-	
 }

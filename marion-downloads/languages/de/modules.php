@@ -9,4 +9,6 @@ $GLOBALS['TL_LANG']['FMD']['download_foehn_newest'] = 'Neuster Foehn';
 $GLOBALS['TL_LANG']['FMD']['download_jahresprogram_archiv'] = 'Jahresprogram Archiv';
 $GLOBALS['TL_LANG']['FMD']['download_jahresprogram'] = 'Neustes Jahresprogram';
 
+$GLOBALS['TL_LANG']['FMD']['download_listing'] = 'Download Liste';
+
 ?>

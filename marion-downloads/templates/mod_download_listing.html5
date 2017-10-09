@@ -5,12 +5,14 @@
   <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
   <?php endif; ?>
 
-  <h1 class="ce_headline">F&ouml;hn</h1>
+  <h1 class="ce_headline">Downloads</h1>
   <?php foreach ($this->arrNextDownloads as $Download): ?>
-    <?php if($Download['type'] != 'Foehn') : ?>
+    <?php if($Download['type'] == 'Download') : ?>
         <h3><?php echo $Download['titel']; ?></h3>
         <p><?php echo $Download['description']; ?></p>
         <p> <a role="button" class="btn btn-warning" href="<?php echo $Download['href']; ?>">Weiter Lesen</a></p>
         <hr>
     <?php endif; ?>
   <?php endforeach; ?>
+</div>
+

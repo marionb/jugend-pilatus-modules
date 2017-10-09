@@ -7,4 +7,5 @@ $GLOBALS['TL_LANG']['FMD']['download_foehn_alle'] = 'Foehn Liste';
 $GLOBALS['TL_LANG']['FMD']['download_foehn_newest'] = 'Neuster Foehn';
 
 
+$GLOBALS['TL_LANG']['FMD']['download_listing'] = 'Download Liste';
 ?>
